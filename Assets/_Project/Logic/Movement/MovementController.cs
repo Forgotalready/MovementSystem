@@ -10,7 +10,7 @@ public class MovementController : IInitializable, IDisposable
 {
     private PlayerInput _input;
 
-    public event Action JupmPerfomed;
+    public event Action JumpPerformed;
     
     public void Initialize()
     {
@@ -19,7 +19,7 @@ public class MovementController : IInitializable, IDisposable
         _input.Gameplay.Jump.performed += OnJumpPerformed;
     }
 
-    private void OnJumpPerformed(InputAction.CallbackContext _) => JupmPerfomed?.Invoke(); 
+    private void OnJumpPerformed(InputAction.CallbackContext _) => JumpPerformed?.Invoke(); 
 
     public Vector3 ReadMove()
     {
