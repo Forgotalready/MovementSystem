@@ -8,5 +8,10 @@ public class GameplaySceneInstaller : MonoInstaller
                 .BindInterfacesAndSelfTo<MovementController>()
                 .FromNew()
                 .AsSingle();
+
+        Container
+                .Bind<Inventory>()
+                .FromNew()
+                .AsSingle();
     }
 }
