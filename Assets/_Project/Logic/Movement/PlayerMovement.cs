@@ -35,9 +35,11 @@ public class PlayerMovement : MonoBehaviour
     private void CreateStates()
     {
         _playerStates[typeof(Moving)] =
-                new Moving(_characterController, _movementController, _animator, _playerSettings);
+                new Moving(_characterController, _movementController, _animator, _playerSettings, _detection);
         _playerStates[typeof(Jump)] =
                 new Jump(_characterController, _movementController, _animator, _playerSettings, _detection);
+        _playerStates[typeof(Falling)] =
+                new Falling(_characterController, _movementController, _animator, _playerSettings, _detection);
     }
 
     private void ChangeState(Type obj)

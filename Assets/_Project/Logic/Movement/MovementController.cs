@@ -27,8 +27,11 @@ public class MovementController : IInitializable, IDisposable
         return new Vector3(input.x, 0f, input.y);
     }
 
+    public Vector2 MouseDelta => _input.Gameplay.Look.ReadValue<Vector2>();
+
     public void Dispose()
     {
+        _input.Gameplay.Jump.performed -= OnJumpPerformed;
         _input.Disable();
     }
 }

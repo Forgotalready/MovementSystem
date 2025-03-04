@@ -23,7 +23,7 @@ public class Jump : BaseState
 
     public override void OnEnter()
     {
-        _horizontalDirection = PlayerSettings.MaxSpeed * MovementController.ReadMove();
+        _horizontalDirection = ToLocalCoordinates(PlayerSettings.MaxSpeed * MovementController.ReadMove());
         _verticalVelocity = Mathf.Sqrt(2 * _gravity * PlayerSettings.JumpHeight);
     }
 
