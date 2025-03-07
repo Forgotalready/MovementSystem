@@ -16,3 +16,5 @@ MonoBehaviour:
   <Icon>k__BackingField: {fileID: 21300000, guid: 22de2b2ae9fe2004f8f59ea78318ddc8,
     type: 3}
   <Description>k__BackingField: Simple Sword
+  equipItemModel: {fileID: 3791582120356757576, guid: 4c880ee99e0443543bfdedf8f78e27b7,
+    type: 3}

@@ -6,21 +6,26 @@ using Zenject;
 public class InventoryView : MonoBehaviour
 {
     [SerializeField] private GameObject _cellContainer;
-    [SerializeField] private Image _cellPrefab;
+    [SerializeField] private GameObject _cellPrefab;
 
+    private CellFactory _cellFactory;
     private Inventory _inventory;
     
     [Inject]
     private void Construct(Inventory inventory) => _inventory = inventory;
 
-    private void Start() => _inventory.InventoryChange += OnInventoryChange;
+    private void Start()
+    {
+        _cellFactory = new CellFactory( _cellPrefab);
+        _inventory.InventoryChange += OnInventoryChange;
+    }
 
     private void OnInventoryChange(IEnumerable inventory)
     {
         ClearContainer();
         foreach (Item item in inventory)
         {
-            Image createdImage = Instantiate(_cellPrefab, _cellContainer.transform);
+            Image createdImage = _cellFactory.CreateCell(_cellContainer.transform).GetComponent<Image>();
             createdImage.sprite = item.Icon;
         }
     }
@@ -29,7 +34,7 @@ public class InventoryView : MonoBehaviour
     {
         foreach (Transform child in _cellContainer.transform)
         {
-            Destroy(child.gameObject);
+            _cellFactory.DeleteCell(child.gameObject);
         }
     }
 

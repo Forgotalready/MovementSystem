@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 using Zenject;
 
 public class PickupComponent : MonoBehaviour
@@ -12,7 +13,13 @@ public class PickupComponent : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out ItemPickup item))
         {
-            _inventory.AddItem(item.ItemData);
+            Item itemData = item.ItemData;
+            _inventory.AddItem(itemData);
+            if (itemData is IEquipable equipableItem)
+            {
+                equipableItem.Equip(gameObject);
+            }
+            Destroy(item);
         }
     }
 }
