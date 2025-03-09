@@ -15,11 +15,6 @@ public class PickupComponent : MonoBehaviour
         {
             Item itemData = item.ItemData;
             _inventory.AddItem(itemData);
-            if (itemData is IEquipable equipableItem)
-            {
-                equipableItem.Equip(gameObject);
-            }
-            Destroy(item);
         }
     }
 }

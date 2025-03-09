@@ -1,7 +1,10 @@
+using UnityEngine;
 using Zenject;
 
 public class GameplaySceneInstaller : MonoInstaller
 {
+    [SerializeField] private GameObject _player;
+
     public override void InstallBindings()
     {
         Container
@@ -10,8 +13,19 @@ public class GameplaySceneInstaller : MonoInstaller
                 .AsSingle();
 
         Container
-                .Bind<Inventory>()
+                .BindInterfacesAndSelfTo<UIController>()
                 .FromNew()
                 .AsSingle();
+
+        Container
+                .BindInterfacesAndSelfTo<ElementFinder>()
+                .FromNew()
+                .AsSingle();
+
+        Container
+                .Bind<Inventory>()
+                .FromNew()
+                .AsSingle()
+                .WithArguments(_player);
     }
 }

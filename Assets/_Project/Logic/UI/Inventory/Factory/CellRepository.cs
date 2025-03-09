@@ -24,7 +24,7 @@ public class CellRepository
 
     public void Delete(GameObject cell)
     {
-        if (_activeCells.Remove(cell))
+        if (!_activeCells.Remove(cell))
         {
             Debug.LogWarning($"CellRepository: {cell.name} не объект созданный фабрикой");
             return;

@@ -10,13 +10,13 @@ public class InventoryView : MonoBehaviour
 
     private CellFactory _cellFactory;
     private Inventory _inventory;
-    
+
     [Inject]
     private void Construct(Inventory inventory) => _inventory = inventory;
 
     private void Start()
     {
-        _cellFactory = new CellFactory( _cellPrefab);
+        _cellFactory = new CellFactory(_cellPrefab);
         _inventory.InventoryChange += OnInventoryChange;
     }
 
@@ -25,15 +25,22 @@ public class InventoryView : MonoBehaviour
         ClearContainer();
         foreach (Item item in inventory)
         {
-            Image createdImage = _cellFactory.CreateCell(_cellContainer.transform).GetComponent<Image>();
-            createdImage.sprite = item.Icon;
+            GameObject createdImage = _cellFactory.CreateCell(_cellContainer.transform);
+            createdImage.GetComponent<CellClickHandler>().CellClicked += OnCellClicked;
+            createdImage.GetComponent<Image>().sprite = item.Icon;
         }
+    }
+
+    private void OnCellClicked(int index)
+    {
+        _inventory.Use(index);
     }
 
     private void ClearContainer()
     {
         foreach (Transform child in _cellContainer.transform)
         {
+            child.GetComponent<CellClickHandler>().CellClicked -= OnCellClicked;
             _cellFactory.DeleteCell(child.gameObject);
         }
     }
