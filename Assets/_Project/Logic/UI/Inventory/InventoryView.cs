@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -10,17 +11,26 @@ public class InventoryView : MonoBehaviour
 
     private CellFactory _cellFactory;
     private Inventory _inventory;
+    private UIController _uiController;
 
     [Inject]
-    private void Construct(Inventory inventory) => _inventory = inventory;
+    private void Construct(Inventory inventory, UIController uiController)
+    {
+        _inventory = inventory;
+        _uiController = uiController;
+    }
 
     private void Start()
     {
         _cellFactory = new CellFactory(_cellPrefab);
         _inventory.InventoryChange += OnInventoryChange;
+        _uiController.InventoryOpened += OnInventoryOpened;
+        gameObject.SetActive(false); // TODO() Придумать как это переделать
     }
 
-    private void OnInventoryChange(IEnumerable inventory)
+    private void OnInventoryOpened() => gameObject.SetActive(!gameObject.activeSelf);
+
+    private void OnInventoryChange(ReadOnlyCollection<Item> inventory)
     {
         ClearContainer();
         foreach (Item item in inventory)
@@ -31,10 +41,7 @@ public class InventoryView : MonoBehaviour
         }
     }
 
-    private void OnCellClicked(int index)
-    {
-        _inventory.Use(index);
-    }
+    private void OnCellClicked(int index) => _inventory.Use(index);
 
     private void ClearContainer()
     {

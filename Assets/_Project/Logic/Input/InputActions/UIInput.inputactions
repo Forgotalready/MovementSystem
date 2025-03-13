@@ -1,0 +1,54 @@
+{
+    "name": "UIInput",
+    "maps": [
+        {
+            "name": "UI",
+            "id": "28215e8f-5f44-45ea-b45b-2b24556bc534",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "b0728de1-4131-45d5-b680-1056f021f964",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "OpenInventory",
+                    "type": "Button",
+                    "id": "e7cc9b18-7d3c-48ca-8ea9-8b2ae31524e7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "936f3e15-5fc8-4902-b714-90c43e1a89b1",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "534e84f5-702a-47e7-8900-8a6cc8ddc148",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 public class Inventory
@@ -8,7 +9,7 @@ public class Inventory
     private readonly List<Item> _items = new();
     private GameObject _player;
 
-    public event Action<IEnumerable> InventoryChange;
+    public event Action<ReadOnlyCollection<Item>> InventoryChange;
     // считается, что класс не может отдавать своё состояние по прямой ссылке, отдаём по интерфейсу, только для чтения
     public Inventory(GameObject player)
     {
@@ -18,13 +19,13 @@ public class Inventory
     public void AddItem(Item item)
     {
         _items.Add(item);
-        InventoryChange?.Invoke(_items);
+        InventoryChange?.Invoke(_items.AsReadOnly());
     }
 
     public void DeleteItem(Item item)
     {
         _items.Remove(item);
-        InventoryChange?.Invoke(_items);
+        InventoryChange?.Invoke(_items.AsReadOnly());
     }
 
     public void Use(int index)
@@ -44,6 +45,6 @@ public class Inventory
         }
         
         _items.RemoveAt(index);
-        InventoryChange?.Invoke(_items);
+        InventoryChange?.Invoke(_items.AsReadOnly());
     }
 }

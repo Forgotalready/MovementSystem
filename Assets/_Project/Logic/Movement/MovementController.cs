@@ -9,6 +9,11 @@ using Zenject;
 public class MovementController : IInitializable, IDisposable
 {
     private PlayerInput _input;
+    private readonly ControllersEventBus _eventBus;
+
+    private bool _isCameraBlock = false;
+    
+    public MovementController(ControllersEventBus eventBus) => _eventBus = eventBus;
 
     public event Action JumpPerformed;
     
@@ -17,7 +22,10 @@ public class MovementController : IInitializable, IDisposable
         _input = new PlayerInput();
         _input.Enable();
         _input.Gameplay.Jump.performed += OnJumpPerformed;
+        _eventBus.Subscribe<UIInteraction>(OnUIInteraction);
     }
+
+    private void OnUIInteraction(UIInteraction uiInteraction) => _isCameraBlock = !_isCameraBlock;
 
     private void OnJumpPerformed(InputAction.CallbackContext _) => JumpPerformed?.Invoke(); 
 
@@ -27,11 +35,22 @@ public class MovementController : IInitializable, IDisposable
         return new Vector3(input.x, 0f, input.y);
     }
 
-    public Vector2 MouseDelta => _input.Gameplay.Look.ReadValue<Vector2>();
+    public Vector2 MouseDelta
+    {
+        get
+        {
+            if (!_isCameraBlock)
+            {
+                return _input.Gameplay.Look.ReadValue<Vector2>();
+            }
+            return Vector2.zero;
+        }
+    }
 
     public void Dispose()
     {
         _input.Gameplay.Jump.performed -= OnJumpPerformed;
         _input.Disable();
+        _eventBus.Unsubscribe<UIInteraction>(OnUIInteraction);
     }
 }
