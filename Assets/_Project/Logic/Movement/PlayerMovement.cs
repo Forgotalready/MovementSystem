@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -7,6 +8,7 @@ using Zenject;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private PlayerSettings _playerSettings;
+    [SerializeField] private EnvironmentConfig _environmentConfig;
 
     private MovementController _movementController;
     private CharacterController _characterController;
@@ -35,15 +37,23 @@ public class PlayerMovement : MonoBehaviour
     private void CreateStates()
     {
         _playerStates[typeof(Moving)] =
-                new Moving(_characterController, _movementController, _animator, _playerSettings, _detection);
+                new Moving(_characterController, _movementController, _animator, _playerSettings, _environmentConfig,
+                        _detection);
         _playerStates[typeof(Jump)] =
-                new Jump(_characterController, _movementController, _animator, _playerSettings, _detection);
+                new Jump(_characterController, _movementController, _animator, _playerSettings, _environmentConfig,
+                        _detection);
         _playerStates[typeof(Falling)] =
-                new Falling(_characterController, _movementController, _animator, _playerSettings, _detection);
+                new Falling(_characterController, _movementController, _animator, _playerSettings, _environmentConfig,
+                        _detection);
     }
 
     private void ChangeState(Type obj)
     {
+        if (!_playerStates.ContainsKey(obj))
+        {
+            return;
+        }
+
         _playerState.OnExit();
         _playerState.StateChange -= ChangeState;
         _playerState = _playerStates[obj];
@@ -62,5 +72,11 @@ public class PlayerMovement : MonoBehaviour
     {
         _playerState.OnExit();
         _playerState.StateChange -= ChangeState;
+    }
+
+    public void SetEnvironmentConfig(EnvironmentConfig environmentConfig)
+    {
+        _environmentConfig = environmentConfig;
+        _playerStates.Values.ToList().ForEach(state => state.SetEnvironmentConfig(environmentConfig));
     }
 }

@@ -7,15 +7,17 @@ public abstract class BaseState : IState
     protected MovementController MovementController;
     protected Animator Animator;
     protected PlayerSettings PlayerSettings;
+    protected EnvironmentConfig EnvironmentConfig;
     private Transform _playerTransform;
 
     protected BaseState(CharacterController characterController, MovementController movementController,
-            Animator animator, PlayerSettings playerSettings)
+            Animator animator, PlayerSettings playerSettings, EnvironmentConfig environmentConfig)
     {
         CharacterController = characterController;
         MovementController = movementController;
         Animator = animator;
         PlayerSettings = playerSettings;
+        EnvironmentConfig = environmentConfig;
         _playerTransform = CharacterController.gameObject.transform;
     }
 
@@ -31,4 +33,8 @@ public abstract class BaseState : IState
     public abstract void OnUpdate(float deltaTime);
 
     public abstract void OnExit();
+    public void SetEnvironmentConfig(EnvironmentConfig environmentConfig)
+    {
+        EnvironmentConfig = environmentConfig;
+    }
 }

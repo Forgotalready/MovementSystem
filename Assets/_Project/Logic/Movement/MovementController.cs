@@ -25,9 +25,11 @@ public class MovementController : IInitializable, IDisposable
         _eventBus.Subscribe<UIInteraction>(OnUIInteraction);
     }
 
-    private void OnUIInteraction(UIInteraction uiInteraction) => _isCameraBlock = !_isCameraBlock;
+    private void OnUIInteraction(UIInteraction uiInteraction) => 
+            _isCameraBlock = !_isCameraBlock;
 
-    private void OnJumpPerformed(InputAction.CallbackContext _) => JumpPerformed?.Invoke(); 
+    private void OnJumpPerformed(InputAction.CallbackContext _) => 
+            JumpPerformed?.Invoke(); 
 
     public Vector3 ReadMove()
     {

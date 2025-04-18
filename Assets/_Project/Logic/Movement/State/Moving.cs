@@ -9,8 +9,8 @@ public class Moving : BaseState
     private float _movementSpeed = 4f;
 
     public Moving(CharacterController characterController, MovementController movementController, Animator animator,
-            PlayerSettings playerSettings, DetectionComponent detectionComponent) :
-            base(characterController, movementController, animator, playerSettings)
+            PlayerSettings playerSettings, EnvironmentConfig environmentConfig, DetectionComponent detectionComponent) :
+            base(characterController, movementController, animator, playerSettings, environmentConfig)
     {
         _detectionComponent = detectionComponent;
     }

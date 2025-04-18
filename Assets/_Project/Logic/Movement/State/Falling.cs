@@ -5,15 +5,17 @@ public class Falling : BaseState
 {
     private Vector3 _playerDirection;
     private float _verticalVelocity;
-    private readonly float _gravity = 9.8f;
+    private float _gravity;
 
     private readonly DetectionComponent _detectionComponent;
 
     public Falling(CharacterController characterController, MovementController movementController, Animator animator,
-            PlayerSettings playerSettings, DetectionComponent detectionComponent) : base(characterController,
-            movementController, animator, playerSettings)
+            PlayerSettings playerSettings, EnvironmentConfig environmentConfig,
+            DetectionComponent detectionComponent) : base(characterController,
+            movementController, animator, playerSettings, environmentConfig)
     {
         _detectionComponent = detectionComponent;
+        _gravity = environmentConfig.Gravity;
     }
 
     public override event Action<Type> StateChange;
@@ -46,5 +48,6 @@ public class Falling : BaseState
     }
 
     public override void OnExit()
-    { }
+    {
+    }
 }

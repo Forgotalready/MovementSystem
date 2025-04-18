@@ -1,5 +1,4 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 public class PickupComponent : MonoBehaviour
@@ -7,7 +6,8 @@ public class PickupComponent : MonoBehaviour
     private Inventory _inventory;
     
     [Inject]
-    private void Construct(Inventory inventory) => _inventory = inventory;
+    private void Construct(Inventory inventory) => 
+            _inventory = inventory;
 
     private void OnTriggerEnter(Collider other)
     {

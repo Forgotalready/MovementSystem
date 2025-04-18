@@ -8,4 +8,5 @@ public interface IState
     public void HandleInput();
     public void OnUpdate(float deltaTime);
     public void OnExit();
+    public void SetEnvironmentConfig(EnvironmentConfig environmentConfig);
 }
