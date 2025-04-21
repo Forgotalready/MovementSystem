@@ -9,7 +9,8 @@ public class ElementFinder : IInitializable, IDisposable
     private readonly UIController _uiController;
     private EventSystem _eventSystem;
 
-    public ElementFinder(UIController uiController) => _uiController = uiController;
+    public ElementFinder(UIController uiController) => 
+            _uiController = uiController;
 
     public void Initialize()
     {
@@ -31,5 +32,6 @@ public class ElementFinder : IInitializable, IDisposable
         }
     }
 
-    public void Dispose() => _uiController.ClickPerformed -= HandleClickAtPosition;
+    public void Dispose() => 
+            _uiController.ClickPerformed -= HandleClickAtPosition;
 }

@@ -14,9 +14,9 @@ public class Jump : BaseState
     private float _jumpHeight; // Если над игроком "открытое" небо, то равно высоте прыжка, иначе, высоте до препятствия
 
     public Jump(CharacterController characterController, MovementController movementController, Animator animator,
-            PlayerSettings playerSettings, EnvironmentConfig environmentConfig,
+            PlayerConfig playerConfig, EnvironmentConfig environmentConfig,
             DetectionComponent detectionComponent) :
-            base(characterController, movementController, animator, playerSettings, environmentConfig)
+            base(characterController, movementController, animator, playerConfig, environmentConfig)
     {
         _detectionComponent = detectionComponent;
         _gravity = environmentConfig.Gravity;
@@ -26,9 +26,19 @@ public class Jump : BaseState
 
     public override void OnEnter()
     {
-        _horizontalDirection = ToLocalCoordinates(PlayerSettings.MaxSpeed * MovementController.ReadMove());
+        _horizontalDirection = ToLocalCoordinates(PlayerConfig.MaxSpeed * MovementController.ReadMove());
         _jumpHeight = CalculateJumpHeight();
-        _verticalVelocity = Mathf.Sqrt(2 * _gravity * _jumpHeight);
+
+        _verticalVelocity = ChooseVerticalVelocity();
+    }
+
+    private float ChooseVerticalVelocity()
+    {
+        if (Mathf.Approximately(_gravity, 0f))
+        {
+            return PlayerConfig.DefaultVerticalVelocity;
+        }
+        return Mathf.Sqrt(2 * _gravity * _jumpHeight);
     }
 
     private float CalculateJumpHeight()
@@ -37,12 +47,12 @@ public class Jump : BaseState
         Vector3 playerPosition = CharacterController.transform.position;
         Vector3 topPointPosition = new Vector3(playerPosition.x, playerPosition.y + CharacterController.height / 2f,
                 playerPosition.z);
-        if (Physics.Raycast(topPointPosition, playerUpDirection, out RaycastHit hit, PlayerSettings.JumpHeight))
+        if (Physics.Raycast(topPointPosition, playerUpDirection, out RaycastHit hit, PlayerConfig.JumpHeight))
         {
             return hit.distance;
         }
 
-        return PlayerSettings.JumpHeight;
+        return PlayerConfig.JumpHeight;
     }
 
     public override void HandleInput()

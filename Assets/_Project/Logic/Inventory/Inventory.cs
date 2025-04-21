@@ -11,11 +11,9 @@ public class Inventory
 
     public event Action<ReadOnlyCollection<Item>> InventoryChange;
     // считается, что класс не может отдавать своё состояние по прямой ссылке, отдаём по интерфейсу, только для чтения
-    public Inventory(GameObject player)
-    {
-        _player = player;
-    }
-    
+    public Inventory(GameObject player) => 
+            _player = player;
+
     public void AddItem(Item item)
     {
         _items.Add(item);

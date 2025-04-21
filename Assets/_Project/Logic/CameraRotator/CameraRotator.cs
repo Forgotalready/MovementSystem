@@ -12,7 +12,8 @@ public class CameraRotator : MonoBehaviour
     private float _verticalRotation = 0.0f;
     
     [Inject]
-    private void Construct(MovementController movementController) => _movementController = movementController;
+    private void Construct(MovementController movementController) => 
+            _movementController = movementController;
 
     public void Update()
     {

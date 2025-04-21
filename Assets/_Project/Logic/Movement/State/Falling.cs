@@ -10,9 +10,9 @@ public class Falling : BaseState
     private readonly DetectionComponent _detectionComponent;
 
     public Falling(CharacterController characterController, MovementController movementController, Animator animator,
-            PlayerSettings playerSettings, EnvironmentConfig environmentConfig,
+            PlayerConfig playerConfig, EnvironmentConfig environmentConfig,
             DetectionComponent detectionComponent) : base(characterController,
-            movementController, animator, playerSettings, environmentConfig)
+            movementController, animator, playerConfig, environmentConfig)
     {
         _detectionComponent = detectionComponent;
         _gravity = environmentConfig.Gravity;
@@ -22,7 +22,7 @@ public class Falling : BaseState
 
     public override void OnEnter()
     {
-        _playerDirection = ToLocalCoordinates(MovementController.ReadMove() * PlayerSettings.MaxSpeed);
+        _playerDirection = ToLocalCoordinates(MovementController.ReadMove() * PlayerConfig.MaxSpeed);
         _verticalVelocity = 0f;
     }
 

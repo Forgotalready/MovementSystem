@@ -7,9 +7,19 @@ public class CellRepository
     private readonly List<GameObject> _activeCells = new();
     private readonly List<GameObject> _disableCells = new();
 
-    public void Add(GameObject cell) => _activeCells.Add(cell);
+    private readonly int _maxDisableCells;
 
-    public bool TryGetInactive(out GameObject inactiveCell)
+    /// <summary>
+    /// Конструктор класса
+    /// </summary>
+    /// <param name="maxDisableCells">Максимальное количество хранимых скрытыми в ОП.</param>
+    public CellRepository(int maxDisableCells = 10) =>
+            _maxDisableCells = maxDisableCells;
+
+    public void Add(GameObject cell) =>
+            _activeCells.Add(cell);
+
+    public bool TryGetDisable(out GameObject inactiveCell)
     {
         if (_disableCells.Count() != 0)
         {
@@ -18,6 +28,7 @@ public class CellRepository
             _activeCells.Add(inactiveCell);
             return true;
         }
+
         inactiveCell = null;
         return false;
     }
@@ -30,7 +41,13 @@ public class CellRepository
             return;
         }
 
-        cell.SetActive(false);
-        _disableCells.Add(cell);
+        if (_disableCells.Count() < _maxDisableCells)
+        {
+            _disableCells.Add(cell);
+        }
+        else
+        {
+            Object.Destroy(cell);
+        }
     }
 }

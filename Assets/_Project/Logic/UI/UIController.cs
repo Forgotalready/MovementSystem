@@ -11,7 +11,8 @@ public class UIController : IInitializable, IDisposable
     public event Action<Vector2> ClickPerformed;
     public event Action InventoryOpened;
     
-    public UIController(ControllersEventBus controllersEventBus) => _controllersEventBus = controllersEventBus;
+    public UIController(ControllersEventBus controllersEventBus) => 
+            _controllersEventBus = controllersEventBus;
     
     public void Initialize()
     {
@@ -36,7 +37,8 @@ public class UIController : IInitializable, IDisposable
         }
     }
 
-    private void OnClick(InputAction.CallbackContext obj) => ClickPerformed?.Invoke(Mouse.current.position.ReadValue());
+    private void OnClick(InputAction.CallbackContext obj) => 
+            ClickPerformed?.Invoke(Mouse.current.position.ReadValue());
 
     public void Dispose()
     {

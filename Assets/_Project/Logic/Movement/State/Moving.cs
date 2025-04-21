@@ -6,19 +6,22 @@ public class Moving : BaseState
     private DetectionComponent _detectionComponent;
     
     private Vector3 _moveDirection;
-    private float _movementSpeed = 4f;
+    private float _movementSpeed;
 
     public Moving(CharacterController characterController, MovementController movementController, Animator animator,
-            PlayerSettings playerSettings, EnvironmentConfig environmentConfig, DetectionComponent detectionComponent) :
-            base(characterController, movementController, animator, playerSettings, environmentConfig)
+            PlayerConfig playerConfig, EnvironmentConfig environmentConfig, DetectionComponent detectionComponent) :
+            base(characterController, movementController, animator, playerConfig, environmentConfig)
     {
         _detectionComponent = detectionComponent;
+        _movementSpeed = playerConfig.MaxSpeed;
     }
 
     public override event Action<Type> StateChange;
-    public override void OnEnter() => MovementController.JumpPerformed += OnJumpPerformed;
+    public override void OnEnter() =>
+            MovementController.JumpPerformed += OnJumpPerformed;
 
-    private void OnJumpPerformed() => StateChange?.Invoke(typeof(Jump));
+    private void OnJumpPerformed() =>
+            StateChange?.Invoke(typeof(Jump));
 
     public override void HandleInput()
     {
@@ -42,5 +45,6 @@ public class Moving : BaseState
     }
 
 
-    public override void OnExit() => MovementController.JumpPerformed -= OnJumpPerformed;
+    public override void OnExit() =>
+            MovementController.JumpPerformed -= OnJumpPerformed;
 }

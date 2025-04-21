@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 public class ControllersEventBus
 {
-    Dictionary<Type, List<object>> _subscribers = new();
+   
+    private readonly Dictionary<Type, List<object>> _subscribers = new();
     
     public void Subscribe<T>(Action<T> callback)
     {

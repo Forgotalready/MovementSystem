@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <MaxSpeed>k__BackingField: 4
   <JumpHeight>k__BackingField: 1
+  <DefaultVerticalVelocity>k__BackingField: 4

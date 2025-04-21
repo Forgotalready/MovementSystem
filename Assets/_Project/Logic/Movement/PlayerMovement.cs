@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 [RequireComponent(typeof(CharacterController), typeof(Animator))]
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private PlayerSettings _playerSettings;
+    [FormerlySerializedAs("_playerSettings")] [SerializeField] private PlayerConfig playerConfig;
     [SerializeField] private EnvironmentConfig _environmentConfig;
 
     private MovementController _movementController;
@@ -37,13 +38,13 @@ public class PlayerMovement : MonoBehaviour
     private void CreateStates()
     {
         _playerStates[typeof(Moving)] =
-                new Moving(_characterController, _movementController, _animator, _playerSettings, _environmentConfig,
+                new Moving(_characterController, _movementController, _animator, playerConfig, _environmentConfig,
                         _detection);
         _playerStates[typeof(Jump)] =
-                new Jump(_characterController, _movementController, _animator, _playerSettings, _environmentConfig,
+                new Jump(_characterController, _movementController, _animator, playerConfig, _environmentConfig,
                         _detection);
         _playerStates[typeof(Falling)] =
-                new Falling(_characterController, _movementController, _animator, _playerSettings, _environmentConfig,
+                new Falling(_characterController, _movementController, _animator, playerConfig, _environmentConfig,
                         _detection);
     }
 

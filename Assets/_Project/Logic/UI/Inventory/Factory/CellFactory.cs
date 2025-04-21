@@ -9,7 +9,7 @@ public class CellFactory
 {
     private readonly GameObject _cellPrefab;
     private readonly CellRepository _cellRepository = new();
-    
+
     /// <summary>
     /// Конструктор класса
     /// </summary>
@@ -26,15 +26,20 @@ public class CellFactory
     /// <returns>Ячейка</returns>
     public GameObject CreateCell(Transform parent)
     {
-        if (_cellRepository.TryGetInactive(out GameObject cell))
+        if (_cellRepository.TryGetDisable(out GameObject cell))
         {
             cell.SetActive(true);
             return cell;
         }
+
         cell = Object.Instantiate(_cellPrefab, parent);
         _cellRepository.Add(cell);
         return cell;
     }
 
-    public void DeleteCell(GameObject cell) => _cellRepository.Delete(cell);
+    public void DeleteCell(GameObject cell)
+    {
+        cell.SetActive(false);
+        _cellRepository.Delete(cell);
+    }
 }

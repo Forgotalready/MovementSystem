@@ -28,7 +28,8 @@ public class InventoryView : MonoBehaviour
         gameObject.SetActive(false); // TODO() Придумать как это переделать
     }
 
-    private void OnInventoryOpened() => gameObject.SetActive(!gameObject.activeSelf);
+    private void OnInventoryOpened() =>
+            gameObject.SetActive(!gameObject.activeSelf);
 
     private void OnInventoryChange(ReadOnlyCollection<Item> inventory)
     {
@@ -41,7 +42,8 @@ public class InventoryView : MonoBehaviour
         }
     }
 
-    private void OnCellClicked(int index) => _inventory.Use(index);
+    private void OnCellClicked(int index) =>
+            _inventory.Use(index);
 
     private void ClearContainer()
     {
@@ -52,5 +54,6 @@ public class InventoryView : MonoBehaviour
         }
     }
 
-    private void OnDestroy() => _inventory.InventoryChange -= OnInventoryChange;
+    private void OnDestroy() =>
+            _inventory.InventoryChange -= OnInventoryChange;
 }

@@ -890,8 +890,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd7054a1f19a4906b629e8a954a81e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerSettings: {fileID: 11400000, guid: 6601788fb670f1044b9e7b738f9ab025, type: 2}
-  _environmentConfig: {fileID: 11400000, guid: cf494f3aa7c0627438ef639ca748dbce, type: 2}
+  playerConfig: {fileID: 11400000, guid: 6601788fb670f1044b9e7b738f9ab025, type: 2}
+  _environmentConfig: {fileID: 11400000, guid: 200a851a98622414cb87ffc207011c01, type: 2}
 --- !u!143 &523272583
 CharacterController:
   m_ObjectHideFlags: 0
