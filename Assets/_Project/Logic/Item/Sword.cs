@@ -5,10 +5,8 @@ public class Sword : Item, IEquipable
 {
     [field: SerializeField] public GameObject EquipItemModel { get; private set; }
 
-    public override void Use()
-    {
-        Debug.Log("SwordUse");
-    }
+    public override void Use() => 
+            Debug.Log("SwordUse");
 
     public void Equip(GameObject player)
     {

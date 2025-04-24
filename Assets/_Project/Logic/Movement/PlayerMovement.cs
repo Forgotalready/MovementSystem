@@ -8,10 +8,11 @@ using Zenject;
 [RequireComponent(typeof(CharacterController), typeof(Animator))]
 public class PlayerMovement : MonoBehaviour
 {
-    [FormerlySerializedAs("_playerSettings")] [SerializeField] private PlayerConfig playerConfig;
     [SerializeField] private EnvironmentConfig _environmentConfig;
 
     private MovementController _movementController;
+    private PlayerConfig _playerConfig;
+    
     private CharacterController _characterController;
     private Animator _animator;
     private DetectionComponent _detection;
@@ -20,8 +21,11 @@ public class PlayerMovement : MonoBehaviour
     private IState _playerState;
 
     [Inject]
-    private void Construct(MovementController movementController) =>
-            _movementController = movementController;
+    private void Construct(MovementController movementController, PlayerConfig playerConfig)
+    {
+        _movementController = movementController;
+        _playerConfig = playerConfig;
+    }
 
     private void Start()
     {
@@ -38,13 +42,13 @@ public class PlayerMovement : MonoBehaviour
     private void CreateStates()
     {
         _playerStates[typeof(Moving)] =
-                new Moving(_characterController, _movementController, _animator, playerConfig, _environmentConfig,
+                new Moving(_characterController, _movementController, _animator, _playerConfig, _environmentConfig,
                         _detection);
         _playerStates[typeof(Jump)] =
-                new Jump(_characterController, _movementController, _animator, playerConfig, _environmentConfig,
+                new Jump(_characterController, _movementController, _animator, _playerConfig, _environmentConfig,
                         _detection);
         _playerStates[typeof(Falling)] =
-                new Falling(_characterController, _movementController, _animator, playerConfig, _environmentConfig,
+                new Falling(_characterController, _movementController, _animator, _playerConfig, _environmentConfig,
                         _detection);
     }
 

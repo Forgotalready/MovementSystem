@@ -5,5 +5,6 @@ public class CellClickHandler : MonoBehaviour, IClickHandler
 {
     public event Action<int> CellClicked;
 
-    public void OnClick() => CellClicked?.Invoke(transform.GetSiblingIndex());
+    public void OnClick() =>
+            CellClicked?.Invoke(transform.GetSiblingIndex());
 }

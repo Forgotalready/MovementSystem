@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Settings/Player")]
+[CreateAssetMenu(menuName = "Configs/Player")]
 public class PlayerConfig : ScriptableObject
 {
     [field: SerializeField] public float MaxSpeed { get; private set; }

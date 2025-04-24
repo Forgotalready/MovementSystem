@@ -13,7 +13,8 @@ public class MovementController : IInitializable, IDisposable
 
     private bool _isCameraBlock = false;
     
-    public MovementController(ControllersEventBus eventBus) => _eventBus = eventBus;
+    public MovementController(ControllersEventBus eventBus) => 
+            _eventBus = eventBus;
 
     public event Action JumpPerformed;
     
