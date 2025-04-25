@@ -13,5 +13,15 @@ public class UIInstaller : MonoInstaller
                 .BindInterfacesAndSelfTo<ElementFinder>()
                 .FromNew()
                 .AsSingle();
+
+        Container
+                .Bind<SaveView>()
+                .FromComponentInHierarchy()
+                .AsSingle();
+        
+        Container
+                .BindInterfacesAndSelfTo<SavePresenter>()
+                .FromNew()
+                .AsSingle();
     }
 }
