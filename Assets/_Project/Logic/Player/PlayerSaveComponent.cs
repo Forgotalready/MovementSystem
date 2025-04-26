@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Zenject;
 
 public class PlayerSaveComponent : MonoBehaviour, ISaveable
@@ -26,12 +27,8 @@ public class PlayerSaveComponent : MonoBehaviour, ISaveable
     {
         return new PlayerState
         {
-                Position = new List<float> { transform.position.x, transform.position.y, transform.position.z },
-                Rotation = new List<float>
-                {
-                        transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y,
-                        transform.rotation.eulerAngles.z
-                }
+                Position = transform.position.ToAdapter(),
+                Rotation = transform.rotation.ToAdapter()
         };
     }
 
@@ -41,9 +38,9 @@ public class PlayerSaveComponent : MonoBehaviour, ISaveable
         {
             CharacterController characterController = GetComponent<CharacterController>();
             characterController.enabled = false;
-            transform.position = new Vector3(playerState.Position[0], playerState.Position[1], playerState.Position[2]);
-            transform.rotation =
-                    Quaternion.Euler(playerState.Rotation[0], playerState.Rotation[1], playerState.Rotation[2]);
+            transform.position = playerState.Position.ToUnity();
+            Debug.Log(transform.position);
+            transform.rotation = playerState.Rotation.ToUnity();
             characterController.enabled = true;
         }
     }
@@ -51,7 +48,7 @@ public class PlayerSaveComponent : MonoBehaviour, ISaveable
     [Serializable]
     private struct PlayerState
     {
-        public List<float> Position;
-        public List<float> Rotation;
+        public Vector3Adapter Position;
+        public QuaternionAdapter Rotation;
     }
 }
