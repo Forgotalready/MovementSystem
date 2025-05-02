@@ -9,6 +9,7 @@ public class GlobalInstaller : MonoInstaller
                 .FromNew()
                 .AsSingle()
                 .WithArguments("Save");
+        
         Container
                 .Bind<SaveService>()
                 .FromNew()

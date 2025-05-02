@@ -23,5 +23,10 @@ public class PlayerInstaller : MonoInstaller
                 .Bind<PlayerConfig>()
                 .FromInstance(_playerConfig)
                 .AsSingle();
+
+        Container
+                .BindInterfacesTo<PlayerSaveComponent>()
+                .FromComponentOn(_player)
+                .AsCached();
     }
 }

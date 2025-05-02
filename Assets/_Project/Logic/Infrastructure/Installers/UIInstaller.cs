@@ -18,7 +18,7 @@ public class UIInstaller : MonoInstaller
                 .Bind<SaveView>()
                 .FromComponentInHierarchy()
                 .AsSingle();
-        
+
         Container
                 .BindInterfacesAndSelfTo<SavePresenter>()
                 .FromNew()

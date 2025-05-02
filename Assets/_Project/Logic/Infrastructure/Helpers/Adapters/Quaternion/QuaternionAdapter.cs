@@ -15,7 +15,7 @@ public struct QuaternionAdapter
         EulerY = adaptedObject.eulerAngles.y;
         EulerZ = adaptedObject.eulerAngles.z;
     }
-    
-    public Quaternion ToUnity() => 
+
+    public Quaternion ToUnity() =>
             Quaternion.Euler(EulerX, EulerY, EulerZ);
 }

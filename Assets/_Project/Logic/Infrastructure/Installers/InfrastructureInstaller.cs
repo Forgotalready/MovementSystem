@@ -13,5 +13,10 @@ public class InfrastructureInstaller : MonoInstaller
                 .Bind<ControllersEventBus>()
                 .FromNew()
                 .AsSingle();
+
+        Container
+                .Bind<SaveGameComposite>()
+                .FromComponentOn(gameObject)
+                .AsSingle();
     }
 }

@@ -3,9 +3,8 @@ using System.Collections.Generic;
 
 public class ControllersEventBus
 {
-   
     private readonly Dictionary<Type, List<object>> _subscribers = new();
-    
+
     public void Subscribe<T>(Action<T> callback)
     {
         Type type = typeof(T);
