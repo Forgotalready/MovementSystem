@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SaveView : MonoBehaviour
+public class SaveView : MonoBehaviour, IGameStartListener, IGameFinishListener
 {
     [SerializeField] private Button _saveButton;
     [SerializeField] private Button _loadButton;
@@ -12,7 +12,7 @@ public class SaveView : MonoBehaviour
     public event Action LoadButtonClicked;
     public event Action DeleteButtonClicked;
     
-    private void Start()
+    public void OnGameStart()
     {
         _saveButton.onClick.AddListener(OnSaveButtonClicked);
         _loadButton.onClick.AddListener(OnLoadButtonClicked);
@@ -27,4 +27,11 @@ public class SaveView : MonoBehaviour
 
     private void OnSaveButtonClicked() => 
             SaveButtonClicked?.Invoke();
+
+    public void OnGameFinish()
+    {
+        _saveButton.onClick.RemoveListener(OnSaveButtonClicked);
+        _loadButton.onClick.RemoveListener(OnLoadButtonClicked);
+        _deleteButton.onClick.RemoveListener(OnDeleteButtonClicked);
+    }
 }

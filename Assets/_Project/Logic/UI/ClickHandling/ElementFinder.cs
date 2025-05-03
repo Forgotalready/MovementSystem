@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Zenject;
 
-public class ElementFinder : IInitializable, IDisposable
+public class ElementFinder : IGameStartListener, IGameFinishListener
 {
     private readonly UIController _uiController;
     private EventSystem _eventSystem;
 
-    public ElementFinder(UIController uiController) => 
+    public ElementFinder(UIController uiController) =>
             _uiController = uiController;
 
-    public void Initialize()
+    public void OnGameStart()
     {
         _uiController.ClickPerformed += HandleClickAtPosition;
         _eventSystem = EventSystem.current;
@@ -32,6 +30,6 @@ public class ElementFinder : IInitializable, IDisposable
         }
     }
 
-    public void Dispose() => 
+    public void OnGameFinish() =>
             _uiController.ClickPerformed -= HandleClickAtPosition;
 }

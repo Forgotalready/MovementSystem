@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 [RequireComponent(typeof(CharacterController), typeof(Animator))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IGameStartListener, IGameUpdateListener, IGameFinishListener
 {
     [SerializeField] private EnvironmentConfig _environmentConfig;
 
@@ -27,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
         _playerConfig = playerConfig;
     }
 
-    private void Start()
+    public void OnGameStart()
     {
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
@@ -38,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
         _playerState.StateChange += ChangeState;
         _playerState.OnEnter();
     }
-
+    
     private void CreateStates()
     {
         _playerStates[typeof(Moving)] =
@@ -65,23 +64,22 @@ public class PlayerMovement : MonoBehaviour
         _playerState.OnEnter();
         _playerState.StateChange += ChangeState;
     }
-
-
-    private void Update()
+    
+    public void OnUpdate(float deltaTime)
     {
         Debug.Log(_playerState.GetType().Name);
-        _playerState.OnUpdate(Time.deltaTime);
+        _playerState.OnUpdate(deltaTime);
     }
-
-    private void OnDestroy()
-    {
-        _playerState.OnExit();
-        _playerState.StateChange -= ChangeState;
-    }
-
+    
     public void SetEnvironmentConfig(EnvironmentConfig environmentConfig)
     {
         _environmentConfig = environmentConfig;
         _playerStates.Values.ToList().ForEach(state => state.SetEnvironmentConfig(environmentConfig));
+    }
+    
+    public void OnGameFinish()
+    {
+        _playerState.OnExit();
+        _playerState.StateChange -= ChangeState;
     }
 }

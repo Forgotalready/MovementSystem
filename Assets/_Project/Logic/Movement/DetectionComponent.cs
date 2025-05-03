@@ -4,10 +4,11 @@ using Zenject;
 /// <summary>
 /// Класс для отслеживания параметров, двигается ли он, на земле, прыгнул.
 /// </summary>
-public class DetectionComponent : MonoBehaviour
+public class DetectionComponent : MonoBehaviour, IGameStartListener, IGameUpdateListener, IGameFinishListener
 {
     [SerializeField] private Transform _groundCheckTransform;
     [SerializeField] private LayerMask _groundLayerMask;
+
     private MovementController _movementController;
 
     public bool IsJumped { get; private set; } = false;
@@ -19,10 +20,10 @@ public class DetectionComponent : MonoBehaviour
     private void Construct(MovementController movementController) =>
             _movementController = movementController;
 
-    private void Start() =>
+    public void OnGameStart() =>
             _movementController.JumpPerformed += OnJumpPerformed;
 
-    private void Update()
+    public void OnUpdate(float deltaTime)
     {
         IsMoving = (_movementController.ReadMove().magnitude != 0);
         IsGrounded = Physics.CheckSphere(_groundCheckTransform.position, 0.1f, _groundLayerMask);
@@ -42,6 +43,6 @@ public class DetectionComponent : MonoBehaviour
     private void OnJumpPerformed() =>
             IsJumped = true;
 
-    private void OnDestroy() =>
+    public void OnGameFinish() =>
             _movementController.JumpPerformed -= OnJumpPerformed;
 }

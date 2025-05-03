@@ -15,7 +15,12 @@ public class UIInstaller : MonoInstaller
                 .AsSingle();
 
         Container
-                .Bind<SaveView>()
+                .BindInterfacesTo<InventoryView>()
+                .FromComponentsInHierarchy()
+                .AsCached();
+
+        Container
+                .BindInterfacesAndSelfTo<SaveView>()
                 .FromComponentInHierarchy()
                 .AsSingle();
 

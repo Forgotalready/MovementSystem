@@ -1,9 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Zenject;
 
-public class UIController : IInitializable, IDisposable
+public class UIController : IGameStartListener, IGameFinishListener
 {
     private readonly ControllersEventBus _controllersEventBus;
     
@@ -14,7 +13,7 @@ public class UIController : IInitializable, IDisposable
     public UIController(ControllersEventBus controllersEventBus) => 
             _controllersEventBus = controllersEventBus;
     
-    public void Initialize()
+    public void OnGameStart()
     {
         _uiInput.Enable();
         _uiInput.UI.Click.performed += OnClick;
@@ -40,7 +39,7 @@ public class UIController : IInitializable, IDisposable
     private void OnClick(InputAction.CallbackContext obj) => 
             ClickPerformed?.Invoke(Mouse.current.position.ReadValue());
 
-    public void Dispose()
+    public void OnGameFinish()
     {
         _uiInput.UI.Click.performed -= OnClick;
         _uiInput.UI.OpenInventory.performed -= OnInventoryOpen;

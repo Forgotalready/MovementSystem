@@ -18,5 +18,10 @@ public class InfrastructureInstaller : MonoInstaller
                 .Bind<SaveGameComposite>()
                 .FromComponentOn(gameObject)
                 .AsSingle();
+
+        Container
+                .Bind<GameCycle>()
+                .FromComponentInHierarchy(gameObject)
+                .AsSingle();
     }
 }

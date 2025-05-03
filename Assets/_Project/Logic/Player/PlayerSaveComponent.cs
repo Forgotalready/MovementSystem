@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using Zenject;
 
 public class PlayerSaveComponent : MonoBehaviour, ISaveable
 {

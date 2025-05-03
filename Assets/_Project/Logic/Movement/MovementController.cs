@@ -1,24 +1,23 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Zenject;
 
 /// <summary>
 /// Класс для работы с системой ввода Unity
 /// </summary>
-public class MovementController : IInitializable, IDisposable
+public class MovementController : IGameStartListener, IGameFinishListener
 {
     private PlayerInput _input;
     private readonly ControllersEventBus _eventBus;
 
     private bool _isCameraBlock = false;
-    
-    public MovementController(ControllersEventBus eventBus) => 
+
+    public MovementController(ControllersEventBus eventBus) =>
             _eventBus = eventBus;
 
     public event Action JumpPerformed;
-    
-    public void Initialize()
+
+    public void OnGameStart()
     {
         _input = new PlayerInput();
         _input.Enable();
@@ -26,11 +25,11 @@ public class MovementController : IInitializable, IDisposable
         _eventBus.Subscribe<UIInteraction>(OnUIInteraction);
     }
 
-    private void OnUIInteraction(UIInteraction uiInteraction) => 
+    private void OnUIInteraction(UIInteraction uiInteraction) =>
             _isCameraBlock = !_isCameraBlock;
 
-    private void OnJumpPerformed(InputAction.CallbackContext _) => 
-            JumpPerformed?.Invoke(); 
+    private void OnJumpPerformed(InputAction.CallbackContext _) =>
+            JumpPerformed?.Invoke();
 
     public Vector3 ReadMove()
     {
@@ -46,11 +45,12 @@ public class MovementController : IInitializable, IDisposable
             {
                 return _input.Gameplay.Look.ReadValue<Vector2>();
             }
+
             return Vector2.zero;
         }
     }
 
-    public void Dispose()
+    public void OnGameFinish()
     {
         _input.Gameplay.Jump.performed -= OnJumpPerformed;
         _input.Disable();

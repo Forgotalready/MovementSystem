@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public class InventoryView : MonoBehaviour
+public class InventoryView : MonoBehaviour, IGameStartListener, IGameFinishListener
 {
     [SerializeField] private GameObject _cellContainer;
     [SerializeField] private GameObject _cellPrefab;
@@ -19,7 +19,7 @@ public class InventoryView : MonoBehaviour
         _uiController = uiController;
     }
 
-    private void Start()
+    public void OnGameStart()
     {
         _cellFactory = new CellFactory(_cellPrefab);
         _inventory.InventoryChange += OnInventoryChange;
@@ -53,6 +53,6 @@ public class InventoryView : MonoBehaviour
         }
     }
 
-    private void OnDestroy() =>
+    public void OnGameFinish() =>
             _inventory.InventoryChange -= OnInventoryChange;
 }

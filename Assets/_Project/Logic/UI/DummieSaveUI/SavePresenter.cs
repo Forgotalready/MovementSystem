@@ -1,7 +1,4 @@
-﻿using System;
-using Zenject;
-
-public class SavePresenter : IInitializable, IDisposable
+﻿public class SavePresenter : IGameStartListener, IGameFinishListener
 {
     private readonly SaveView _view;
     private readonly SaveService _saveService;
@@ -13,7 +10,7 @@ public class SavePresenter : IInitializable, IDisposable
     }
 
 
-    public void Initialize()
+    public void OnGameStart()
     {
         _view.SaveButtonClicked += OnSaveButtonClicked;
         _view.LoadButtonClicked += OnLoadButtonClicked;
@@ -29,7 +26,7 @@ public class SavePresenter : IInitializable, IDisposable
     private void OnSaveButtonClicked() => 
             _saveService.Save();
 
-    public void Dispose()
+    public void OnGameFinish()
     {
         _view.SaveButtonClicked -= OnSaveButtonClicked;
         _view.LoadButtonClicked -= OnLoadButtonClicked;

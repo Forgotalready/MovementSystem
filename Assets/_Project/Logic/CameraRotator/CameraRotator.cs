@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-public class CameraRotator : MonoBehaviour
+public class CameraRotator : MonoBehaviour, IGameUpdateListener
 {
     [SerializeField] private Camera _playerCamera;
     [SerializeField] private float _maxVerticalAngel = 45f;
@@ -14,7 +14,7 @@ public class CameraRotator : MonoBehaviour
     private void Construct(MovementController movementController) =>
             _movementController = movementController;
 
-    public void Update()
+    public void OnUpdate(float deltaTime)
     {
         Vector2 mouseDelta = _movementController.MouseDelta;
         _verticalRotation -= mouseDelta.y;

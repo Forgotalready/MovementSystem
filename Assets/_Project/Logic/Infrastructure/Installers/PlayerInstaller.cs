@@ -25,6 +25,21 @@ public class PlayerInstaller : MonoInstaller
                 .AsSingle();
 
         Container
+                .BindInterfacesTo<CameraRotator>()
+                .FromComponentOn(_player)
+                .AsCached();
+
+        Container
+                .BindInterfacesTo<DetectionComponent>()
+                .FromComponentOn(_player)
+                .AsCached();
+
+        Container
+                .BindInterfacesTo<PlayerMovement>()
+                .FromComponentOn(_player)
+                .AsCached();
+
+        Container
                 .BindInterfacesTo<PlayerSaveComponent>()
                 .FromComponentOn(_player)
                 .AsCached();
